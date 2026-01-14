@@ -18,5 +18,26 @@ public class VariablePractice {
         System.out.println("키: " + height); // 출력 후 줄바꿈 출력 메서드
         System.out.println("학생 여부: " + isStudent); // 출력 후 줄바꿈 출력 메서드
         System.out.println("학점: " + grade); // 출력 후 줄바꿈 출력 메서드
+
+        if (true) {
+            System.out.println("ㅁㅔ롱");
+        }
+
+        // equals는 대소문자를 구분합니다.
+        if("String".equalsIgnoreCase("string")) {
+            System.out.println("true");
+        }
+
+        boolean isLogging = true;
+
+        // 2가지 조건이 있어서,
+        // 1조건이 true일 때, 실행될 코드
+
+        if(isLogging) {
+            System.out.println("어서오세요. 고객님!");
+        } else {
+            System.out.println("로그인 해주세요!");
+        }
+
     }
 }
