@@ -127,12 +127,105 @@ git stash list
 
 ---
 
+### 9️⃣ Fork 워크플로우 (원본 저장소 → 내 저장소 → PR)
+
+#### ✔️ 최초 설정 (한 번만)
+```bash
+# 1. GitHub에서 원본 저장소 Fork
+# 2. Fork한 내 저장소를 로컬에 clone
+git clone https://github.com/내계정/goorm-backend-java.git
+cd goorm-backend-java
+
+# 3. 원본 저장소를 upstream으로 추가
+git remote add upstream https://github.com/원본계정/goorm-backend-java.git
+
+# 4. 확인
+git remote -v
+# origin    https://github.com/내계정/goorm-backend-java.git (fetch)
+# origin    https://github.com/내계정/goorm-backend-java.git (push)
+# upstream  https://github.com/원본계정/goorm-backend-java.git (fetch)
+# upstream  https://github.com/원본계정/goorm-backend-java.git (push)
+```
+
+#### ✔️ 원본 저장소 최신 코드 가져오기
+```bash
+# upstream에서 최신 코드 받기
+git fetch upstream
+git merge upstream/main
+
+# 또는 rebase (권장)
+git pull --rebase upstream main
+
+# 내 원격 저장소에도 반영
+git push origin main
+```
+
+#### ✔️ 작업 후 PR 보내기
+```bash
+# 1. 작업용 브랜치 생성
+git checkout -b feature/chapter01
+
+# 2. 작업 후 커밋
+git add .
+git commit -m "과제: Chapter01 실습 완료"
+
+# 3. 내 원격 저장소에 푸시
+git push origin feature/chapter01
+
+# 4. GitHub에서 Pull Request 생성
+# (내 저장소 → 원본 저장소로 PR)
+```
+
+#### ✔️ PR 승인 후 브랜치 정리
+```bash
+# main 브랜치로 이동
+git checkout main
+
+# 원본 저장소 최신 코드 받기
+git pull --rebase upstream main
+
+# 작업 브랜치 삭제
+git branch -d feature/chapter01
+
+# 원격 브랜치 삭제
+git push origin --delete feature/chapter01
+```
+
+#### ✔️ 일상적인 작업 흐름
+```bash
+# 1. 작업 시작 전 원본 최신화
+git checkout main
+git pull --rebase upstream main
+git push origin main
+
+# 2. 새 작업 브랜치 생성
+git checkout -b feature/새작업
+
+# 3. 작업 + 커밋 + 푸시
+git add .
+git commit -m "작업 내용"
+git push origin feature/새작업
+
+# 4. GitHub에서 PR 생성
+
+# 5. PR 승인되면 브랜치 정리 후 1번으로
+```
+
+---
+
 ## ⭐ 추천 사용 흐름
 
+### 개인 저장소 사용 시
 1. **작업 시작** → `git pull --rebase`
 2. **작업 중** → 수시로 `git status`
 3. **커밋 전** → 다시 `git pull --rebase`
 4. **문제 발생** → `stash` / `reset` 중 상황에 맞게 선택
+
+### Fork 워크플로우 사용 시
+1. **작업 시작** → `git pull --rebase upstream main`
+2. **새 브랜치** → `git checkout -b feature/작업명`
+3. **작업 완료** → commit → push → PR
+4. **PR 승인 후** → 브랜치 정리 → 1번으로
 
 ---
 
