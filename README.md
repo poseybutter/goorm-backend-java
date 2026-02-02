@@ -6,7 +6,6 @@
 
 ## 📌 프로젝트 개요
 
-- Java 기초 문법 및 주요 개념 학습
 - 과제 및 실습 코드 정리
 - 콘솔 기반 프로그램 위주로 구성
 
@@ -149,40 +148,42 @@ git remote -v
 
 #### ✔️ 원본 저장소 최신 코드 가져오기
 ```bash
-# upstream에서 최신 코드 받기
+# upstream에서 최신 코드 받기 (main 또는 master)
 git fetch upstream
-git merge upstream/main
+git merge upstream/main  # 원본이 main인 경우
+# git merge upstream/master  # 원본이 master인 경우
 
 # 또는 rebase (권장)
-git pull --rebase upstream main
+git pull --rebase upstream main  # 브랜치명에 맞게 변경
+# git pull --rebase upstream master
 
 # 내 원격 저장소에도 반영
-git push origin main
+git push origin main  # 내 저장소 브랜치명에 맞게 변경
 ```
 
 #### ✔️ 작업 후 PR 보내기
 ```bash
 # 1. 작업용 브랜치 생성
-git checkout -b feature/chapter01
+git checkout -b feature/chapter01(브랜치명)
 
 # 2. 작업 후 커밋
-git add .
-git commit -m "과제: Chapter01 실습 완료"
+git add src/day9
+git commit -m "과제: Chapter14 실습 완료"
 
 # 3. 내 원격 저장소에 푸시
 git push origin feature/chapter01
 
 # 4. GitHub에서 Pull Request 생성
-# (내 저장소 → 원본 저장소로 PR)
+# (내 저장소 feature/chapter01 → 원본 저장소 main/master)
 ```
 
 #### ✔️ PR 승인 후 브랜치 정리
 ```bash
-# main 브랜치로 이동
+# 메인 브랜치로 이동 (main 또는 master)
 git checkout main
 
 # 원본 저장소 최신 코드 받기
-git pull --rebase upstream main
+git pull --rebase upstream main  # 브랜치명 확인 후 사용
 
 # 작업 브랜치 삭제
 git branch -d feature/chapter01
@@ -193,10 +194,10 @@ git push origin --delete feature/chapter01
 
 #### ✔️ 일상적인 작업 흐름
 ```bash
-# 1. 작업 시작 전 원본 최신화
-git checkout main
-git pull --rebase upstream main
-git push origin main
+# 1. 작업 시작 전 원본 최신화 (브랜치명 확인!)
+git checkout main  # 또는 master
+git pull --rebase upstream main  # 원본 브랜치명
+git push origin main  # 내 저장소 브랜치명
 
 # 2. 새 작업 브랜치 생성
 git checkout -b feature/새작업
@@ -207,25 +208,29 @@ git commit -m "작업 내용"
 git push origin feature/새작업
 
 # 4. GitHub에서 PR 생성
+# (feature/새작업 → upstream의 main/master)
 
 # 5. PR 승인되면 브랜치 정리 후 1번으로
 ```
 
----
+#### 💡 브랜치명 확인 방법
+```bash
+# 원격 저장소의 브랜치 확인
+git branch -r
+
+# 결과 예시:
+# origin/main
+# origin/HEAD -> origin/main
+# upstream/main
+# upstream/develop
+```
 
 ## ⭐ 추천 사용 흐름
 
-### 개인 저장소 사용 시
 1. **작업 시작** → `git pull --rebase`
 2. **작업 중** → 수시로 `git status`
 3. **커밋 전** → 다시 `git pull --rebase`
 4. **문제 발생** → `stash` / `reset` 중 상황에 맞게 선택
-
-### Fork 워크플로우 사용 시
-1. **작업 시작** → `git pull --rebase upstream main`
-2. **새 브랜치** → `git checkout -b feature/작업명`
-3. **작업 완료** → commit → push → PR
-4. **PR 승인 후** → 브랜치 정리 → 1번으로
 
 ---
 
