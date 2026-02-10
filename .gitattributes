@@ -1,5 +1,0 @@
-# Normalize line endings for cross-OS development.
-* text=auto
-
-# Source code: keep LF in the repo even on Windows.
-*.java text eol=lf
